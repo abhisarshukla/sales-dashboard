@@ -1,0 +1,34 @@
+.login-card {
+  max-width: 400px;
+}
+
+.brand-heading {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  color: rgb(116, 30, 255);
+}
+
+mat-card-header {
+  justify-content: center;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+.login-button {
+  width: 300px;
+  border-radius: 20px;
+}
+
+.login-container {
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

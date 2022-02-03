@@ -1,0 +1,69 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    *ngIf="isAuthenticated"
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    opened="false"
+  >
+    <div class="avatar-container">
+      <div
+        mat-card-avatar
+        class="user-avatar"
+        [style]="{ background: avatar }"
+      ></div>
+      <span class="user-role">{{ user.firstname + " " + user.lastname }}</span>
+      <span>
+        <mat-chip>{{ user.role }}</mat-chip>
+      </span>
+    </div>
+    <mat-nav-list>
+      <ng-container *ngFor="let item of menuItems">
+        <a
+          *ngIf="item.allowed[user.role]"
+          mat-list-item
+          [routerLink]="'/' + item.name"
+        >
+          {{ item.name | titlecase }}
+        </a>
+      </ng-container>
+      <mat-expansion-panel *ngIf="user.role === 'admin'" class="admin-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            ><mat-icon>admin_panel_settings</mat-icon> Admin
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <a mat-list-item [routerLink]="'/admin/roles'"> Roles </a>
+        <a mat-list-item [routerLink]="'/admin/users'"> Users </a>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        *ngIf="isAuthenticated"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span (click)="routeToHomePage()" class="brand-name">Bounty</span>
+      <span class="spacer"></span>
+      <button
+        type="button"
+        *ngIf="isAuthenticated"
+        aria-label="Logout"
+        color="warn"
+        mat-flat-button
+        (click)="onLogout()"
+      >
+        Logout<mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

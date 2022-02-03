@@ -1,0 +1,13 @@
+openapi: 3.0.2
+info:
+  title: Online Sales Dashboard
+  description: This API exposes routes to be used by the Online Sales Dashboard frontend application.
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /test:
+    get:
+      responses:
+        200:
+          description: OK

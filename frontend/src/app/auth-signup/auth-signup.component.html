@@ -1,0 +1,88 @@
+<div class="signup-container">
+  <mat-card class="signup-card center-text">
+    <mat-card-header>
+      <mat-card-title class="brand-heading">Bounty!</mat-card-title>
+      <mat-card-title>Signup</mat-card-title>
+      <mat-card-subtitle>to Bounty sales dashboard.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider inset></mat-divider>
+    <mat-card-content>
+      <mat-error *ngIf="error">{{ error }}</mat-error>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstname" type="text" name="firstname" matInput placeholder="John" />
+          <mat-error *ngIf="!signupForm.get('firstname').valid">{{ getErrorFunctions.firstname() }}</mat-error>
+          <mat-hint align="end">Minimum 2 characters</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastname" type="text" name="lastname" matInput placeholder="Doe" />
+          <mat-error *ngIf="!signupForm.get('lastname').valid">{{ getErrorFunctions.lastname() }}</mat-error>
+          <mat-hint align="end">Minimum 2 characters</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" type="email" name="email" matInput placeholder="user@email.com" />
+          <mat-error *ngIf="!signupForm.get('email').valid">{{ getErrorFunctions.email() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Password</mat-label>
+          <input
+            formControlName="password"
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            name="password"
+            placeholder="super secret password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="!signupForm.get('password').valid">{{ getErrorFunctions.password() }}</mat-error>
+          <mat-hint align="end">Minimum 8 characters</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            formControlName="confirmpassword"
+            matInput
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            name="confirmpassword"
+            placeholder="super secret password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+            [attr.aria-label]="'Hide Confirm password'"
+            [attr.aria-pressed]="hideConfirmPassword"
+          >
+            <mat-icon>{{ hideConfirmPassword ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="!signupForm.get('confirmpassword').valid">{{ getErrorFunctions.confirmpassword() }}</mat-error>
+          <mat-hint align="end">Minimum 8 characters</mat-hint>
+        </mat-form-field>
+        <div style="padding: 1rem 0;">
+          <button [disabled]="!signupForm.valid" type="submit" class="signup-button" mat-flat-button color="primary">
+            Signup
+          </button>
+        </div>
+      </form>
+      <p>Already have an account? <a [routerLink]="'/login'">Login</a></p>
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-progress-bar
+        *ngIf="isLoading"
+        mode="indeterminate"
+      ></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</div>
