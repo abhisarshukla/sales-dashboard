@@ -1,5 +1,5 @@
 # Sales Dashboard
-> This project implments a sales dashboard with Angular as frontend framework and expressJS as backend with MongoDB as database.
+> This project implements a sales dashboard with Angular as frontend framework and expressJS as backend with MongoDB as database.
 
 ## How To Run
 
