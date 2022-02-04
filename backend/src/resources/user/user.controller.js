@@ -24,6 +24,16 @@ export const updateMe = async (req, res) => {
   }
 }
 
+export const getUsers = async (_req, res) => {
+  try {
+    const users = User.find().select('-password').lean().exec()
+    res.status(200).json({ data: users })
+  } catch (e) {
+    console.error(e)
+    res.status(400).end()
+  }
+}
+
 export const updateUser = async (req, res) => {
   if (req.user._id === req.params.id) {
     res.status(403).json({ error: 'Cannot update self using this route!' })
