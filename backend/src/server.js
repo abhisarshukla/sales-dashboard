@@ -5,6 +5,7 @@ import cors from 'cors'
 import config from './config'
 import { connect } from './utils/db'
 import { login, signup, protect } from './utils/auth'
+import userRouter from './resources/user/user.router'
 
 export const app = express()
 
@@ -19,6 +20,8 @@ app.post('/signup', signup)
 app.post('/login', login)
 
 app.use('/api', protect)
+
+app.use('/api/user', userRouter)
 
 export const start = async () => {
   try {
