@@ -1,7 +1,7 @@
 import { AccessControl } from 'accesscontrol'
 const ac = new AccessControl()
 
-ac.grant('seller')
+ac.grant('sales')
   .createAny('order')
   .updateAny('order')
   .deleteAny('order')
@@ -22,7 +22,7 @@ ac.grant('curator')
   .readOwn('profile')
 
 ac.grant('admin')
-  .extend('seller')
+  .extend('sales')
   .extend('curator')
   .updateAny('user')
   .deleteAny('user')
