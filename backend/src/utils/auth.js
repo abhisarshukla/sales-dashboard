@@ -18,22 +18,14 @@ export const verifyToken = (token) =>
   })
 
 export const signup = async (req, res) => {
-  if (
-    !req.body.email ||
-    !req.body.password ||
-    !req.body.name ||
-    !req.body.name.firstname ||
-    !req.user.name.lastname
-  ) {
-    return res
-      .status(400)
-      .send({ message: 'email, password, firstname and lastname required.' })
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send({ message: 'email, password required.' })
   }
 
   try {
     req.body.role = 'sales'
     const _user = await User.create(req.body)
-    const { password, ...user } = _user
+    const { password, ...user } = _user._doc
     const token = newToken(user)
     return res.status(201).send({ token, user })
   } catch (e) {
@@ -66,7 +58,7 @@ export const login = async (req, res) => {
       return res.status(401).send(invalid)
     }
 
-    const user = User.findOne({ email: req.body.email })
+    const user = await User.findOne({ email: req.body.email })
       .select('-password')
       .lean()
       .exec()
