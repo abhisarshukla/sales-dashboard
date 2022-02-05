@@ -21,6 +21,13 @@ export const signup = async (req, res) => {
     return res.status(400).send({ message: 'email, password required.' })
   }
 
+  const users = await User.find({ email: req.body.email }).exec()
+  if (users.length > 0) {
+    return res
+      .status(200)
+      .json({ code: 'EMAIL_EXISTS', message: 'User is already registered.' })
+  }
+
   try {
     req.body.role = 'sales'
     const _user = await User.create(req.body)
