@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 import * as bcrypt from 'bcrypt'
+import SequenceFactory from 'mongoose-sequence'
+
+const AutoIncrement = SequenceFactory(mongoose)
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -30,7 +33,13 @@ const userSchema = new mongoose.Schema({
     default: 'sales',
     enum: ['sales', 'curator', 'admin'],
   },
+  user_id: {
+    type: Number,
+    immutable: true,
+  },
 })
+
+userSchema.plugin(AutoIncrement, { inc_field: 'user_id' })
 
 userSchema.pre('save', function (next) {
   if (!this.isModified('password')) {
