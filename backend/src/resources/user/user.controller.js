@@ -28,7 +28,7 @@ export const updateMe = async (req, res) => {
 
 export const getUsers = async (_req, res) => {
   try {
-    const users = User.find().select('-password').lean().exec()
+    const users = await User.find().select('-password').lean().exec()
     res.status(200).json({ data: users })
   } catch (e) {
     console.error(e)
