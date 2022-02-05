@@ -29,7 +29,7 @@ export const signup = async (req, res) => {
   }
 
   try {
-    req.body.role = 'sales'
+    req.body.role = 'admin' //please change this before production
     const _user = await User.create(req.body)
     const { password, ...user } = _user._doc
     const token = newToken(user)
@@ -80,7 +80,12 @@ export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization
 
   if (!bearer || !bearer.startsWith('Bearer ')) {
-    return res.status(401).end()
+    return res
+      .status(401)
+      .json({
+        code: 'UNAUTHORIZED',
+        message: 'Not authorized to access this route, please login first.',
+      })
   }
 
   const token = bearer.split('Bearer ')[1].trim()
