@@ -6,6 +6,7 @@ import config from './config'
 import { connect } from './utils/db'
 import { login, signup, protect } from './utils/auth'
 import userRouter from './resources/user/user.router'
+import productRouter from './resources/product/product.router'
 
 export const app = express()
 
@@ -22,6 +23,7 @@ app.post('/login', login)
 app.use('/api', protect)
 
 app.use('/api/user', userRouter)
+app.use('/api/product', productRouter)
 
 export const start = async () => {
   try {
