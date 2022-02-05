@@ -1,6 +1,6 @@
 import roles from './roles'
 
-export const grantAcess = (action, resource) => {
+export const grantAccess = (action, resource) => {
   return async (req, res, next) => {
     try {
       const permission = roles.can(req.user.role)[action](resource)
