@@ -1,4 +1,5 @@
 import { User } from './user.model'
+import * as dot from 'dot-object'
 
 export const me = (req, res) => {
   res.status(200).json({ data: req.user })
@@ -10,7 +11,8 @@ export const updateMe = async (req, res) => {
     return
   }
   try {
-    const user = await User.findByIdAndUpdate(req.user._id, req.body, {
+    const updates = dot.dot(req.body)
+    const user = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,
     })
       .select('-password')
@@ -35,14 +37,19 @@ export const getUsers = async (_req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-  if (req.user._id === req.params.id) {
+  if (req.user.user_id === req.params.id) {
     res.status(403).json({ error: 'Cannot update self using this route!' })
     return
   }
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+    const updates = dot.dot(req.body)
+    const user = await User.findOneAndUpdate(
+      { user_id: req.params.id },
+      updates,
+      {
+        new: true,
+      }
+    )
       .select('-password')
       .lean()
       .exec()
