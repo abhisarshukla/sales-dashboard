@@ -1,7 +1,6 @@
 import config from '../config'
 import { User } from '../resources/user/user.model'
 import jwt from 'jsonwebtoken'
-import { redirect } from 'express/lib/response'
 
 export const newToken = (user) => {
   return jwt.sign({ id: user.id }, config.secrets.jwt, {
