@@ -2,7 +2,9 @@ import { Product } from './product.model'
 
 export const getOne = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).lean().exec()
+    const product = await Product.findOne({ product_id: req.params.id })
+      .lean()
+      .exec()
     res.status(200).json({ data: product })
   } catch (e) {
     console.error(e)
@@ -32,9 +34,13 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    const product = Product.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+    const product = await Product.findOneAndUpdate(
+      { product_id: req.params.id },
+      req.body,
+      {
+        new: true,
+      }
+    )
       .lean()
       .exec()
     res.status(200).json({ data: product })
@@ -44,9 +50,12 @@ export const update = async (req, res) => {
   }
 }
 
-export const remove = async (res, res) => {
+export const remove = async (req, res) => {
   try {
-    const product = Product.findByIdAndRemove(req.params.id, req.body).exec()
+    const product = await Product.findOneAndRemove(
+      { product_id: req.params.id },
+      req.body
+    ).exec()
     res.status(200).json({ data: product })
   } catch (e) {
     console.error(e)
