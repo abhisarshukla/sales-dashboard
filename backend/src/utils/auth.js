@@ -69,7 +69,7 @@ export const login = async (req, res) => {
       .lean()
       .exec()
     const token = newToken(_user)
-    return res.status(201).send({ token, user })
+    return res.status(200).send({ token, user })
   } catch (e) {
     console.error(e)
     res.status(500).end()
