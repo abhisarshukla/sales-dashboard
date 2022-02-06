@@ -79,13 +79,12 @@ export const login = async (req, res) => {
 export const protect = async (req, res, next) => {
   const bearer = req.headers.authorization
 
+  const unauthorizedResponse = {
+    code: 'UNAUTHORIZED',
+    message: 'Not authorized to access this route, please login first.',
+  }
   if (!bearer || !bearer.startsWith('Bearer ')) {
-    return res
-      .status(401)
-      .json({
-        code: 'UNAUTHORIZED',
-        message: 'Not authorized to access this route, please login first.',
-      })
+    return res.status(401).json(unauthorizedResponse)
   }
 
   const token = bearer.split('Bearer ')[1].trim()
@@ -93,7 +92,7 @@ export const protect = async (req, res, next) => {
   try {
     payload = await verifyToken(token)
   } catch (e) {
-    return res.status(401).end()
+    return res.status(401).json(unauthorizedResponse)
   }
 
   const user = await User.findById(payload.id).select('-password').lean().exec()

@@ -7,6 +7,8 @@ import { connect } from './utils/db'
 import { login, signup, protect } from './utils/auth'
 import userRouter from './resources/user/user.router'
 import productRouter from './resources/product/product.router'
+import customerRouter from './resources/customer/customer.router'
+import orderRouter from './resources/order/order.router'
 
 export const app = express()
 
@@ -24,6 +26,8 @@ app.use('/api', protect)
 
 app.use('/api/user', userRouter)
 app.use('/api/product', productRouter)
+app.use('/api/customer', customerRouter)
+app.use('/api/order', orderRouter)
 
 export const start = async () => {
   try {
