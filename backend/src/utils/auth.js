@@ -33,7 +33,9 @@ export const signup = async (req, res) => {
     const _user = await User.create(req.body)
     const { password, ...user } = _user._doc
     const token = newToken(user)
-    return res.status(201).send({ token, user })
+    return res
+      .status(201)
+      .send({ token, user, expiresIn: config.secrets.jwtExp })
   } catch (e) {
     return res.status(500).end()
   }
@@ -69,7 +71,9 @@ export const login = async (req, res) => {
       .lean()
       .exec()
     const token = newToken(_user)
-    return res.status(200).send({ token, user })
+    return res
+      .status(200)
+      .send({ token, user, expiresIn: config.secrets.jwtExp })
   } catch (e) {
     console.error(e)
     res.status(500).end()
