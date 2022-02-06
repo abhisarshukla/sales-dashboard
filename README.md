@@ -9,7 +9,7 @@ Make sure you installed nodejs-v16 or above and mongodb-v5 or above.
 ### Steps
 1. git clone this repository or download the zip file.
 2. Go to that directory and open it in your terminal.
-3. Follow the steps mentioned in README.md file for [frontend](https://github.com/abhisarshukla/sales-dashboard/blob/main/frontend/README.md) and backend.
+3. Follow the steps mentioned in README.md file for [frontend](https://github.com/abhisarshukla/sales-dashboard/blob/main/frontend/README.md) and [backend](https://github.com/abhisarshukla/sales-dashboard/blob/main/backend/README.md).
 
 ## Features
 1. Login/SignUp.
