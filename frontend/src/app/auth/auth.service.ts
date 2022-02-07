@@ -4,20 +4,39 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from './user.model';
-import { MockUserService } from './mock-user.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { coerceStringArray } from '@angular/cdk/coercion';
+
+export interface AuthResponseData {
+  token: string;
+  user: {
+    _id: string;
+    name: {
+      firstname: string;
+      lastname: string;
+    };
+    email: string;
+    role: string;
+    user_id: number;
+    __v: number;
+  };
+  expiresIn: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private mockUser: MockUserService, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string, firstname: string, lastname: string) {
-    return this.mockUser
-      .signup({
-        firstname,
-        lastname,
+    return this.http
+      .post<AuthResponseData>('http://127.0.0.1:4000/signup', {
+        name: {
+          firstname,
+          lastname,
+        },
         email,
         password,
       })
@@ -25,12 +44,12 @@ export class AuthService {
         catchError(this.handleError),
         tap((resData) => {
           this.handleAuthentication(
-            resData.email,
-            resData.idToken,
-            resData.firstname,
-            resData.lastname,
-            resData.role,
-            resData.idToken,
+            resData.user.email,
+            resData.user._id,
+            resData.user.name.firstname,
+            resData.user.name.lastname,
+            resData.user.role,
+            resData.token,
             +resData.expiresIn
           );
         })
@@ -38,20 +57,25 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.mockUser.login(email, password).pipe(
-      catchError(this.handleError),
-      tap((resData) => {
-        this.handleAuthentication(
-          resData.email,
-          resData.idToken,
-          resData.firstname,
-          resData.lastname,
-          resData.role,
-          resData.idToken,
-          +resData.expiresIn
-        );
+    return this.http
+      .post<AuthResponseData>('http://127.0.0.1:4000/login', {
+        email,
+        password,
       })
-    );
+      .pipe(
+        catchError(this.handleError),
+        tap((resData) => {
+          this.handleAuthentication(
+            resData.user.email,
+            resData.user._id,
+            resData.user.name.firstname,
+            resData.user.name.lastname,
+            resData.user.role,
+            resData.token,
+            +resData.expiresIn
+          );
+        })
+      );
   }
 
   autoLogin() {
@@ -127,17 +151,17 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  private handleError(errorMsg: string) {
+  private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    switch (errorMsg) {
+    if (!errorRes.error || !errorRes.error.code) {
+      return throwError(() => new Error(errorMessage));
+    }
+    switch (errorRes.error.code) {
       case 'EMAIL_EXISTS':
         errorMessage = 'This email exists already';
         break;
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email does not exist.';
-        break;
-      case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct.';
+      case 'INVALID_EMAIL_PASSWORD':
+        errorMessage = 'Email or password is incorrect';
         break;
     }
     return throwError(() => new Error(errorMessage));
