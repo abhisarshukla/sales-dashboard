@@ -25,7 +25,6 @@ export class OrderService {
   ): Observable<Order[]> {
     return this.http.get<OrdersResponse>(this.ordersUrl).pipe(
       map((response) => {
-        console.log(response);
         return this.getPagedData(
           this.getSortedData(response.body, sortField, sortDirection),
           offset,
@@ -61,7 +60,6 @@ export class OrderService {
   }
 
   private getSortedData(data: Order[], active: string, direction: string) {
-    console.log(data);
     if (!active || direction === '') {
       return data;
     }

@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -15,6 +21,7 @@ export class OrdersTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Order>;
+  @Input('actions') showActions: boolean = false;
   dataSource: OrdersTableDataSource;
   dataLength: number;
   errorMessage: string;
@@ -35,6 +42,11 @@ export class OrdersTableComponent implements AfterViewInit, OnInit {
   constructor(private orderService: OrderService) {}
 
   ngOnInit() {
+    if (!this.showActions) {
+      this.displayedColumns.pop();
+    } else {
+      this.displayedColumns.push('actions');
+    }
     this.dataSource = new OrdersTableDataSource(this.orderService);
     this.orderService.getOrderCount().subscribe({
       next: (orderCount) => {

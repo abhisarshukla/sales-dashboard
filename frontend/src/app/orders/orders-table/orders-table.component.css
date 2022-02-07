@@ -28,3 +28,9 @@ th {
   display: flex;
   justify-content: center;
 }
+
+.action-cell {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
