@@ -9,7 +9,7 @@ import { Order } from '../order';
 @Component({
   selector: 'app-orders-table',
   templateUrl: './orders-table.component.html',
-  styleUrls: ['./orders-table.component.css']
+  styleUrls: ['./orders-table.component.css'],
 })
 export class OrdersTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -19,24 +19,28 @@ export class OrdersTableComponent implements AfterViewInit, OnInit {
   dataLength: number;
   errorMessage: string;
 
+  log(val) {
+    console.log(val);
+  }
+
   displayedColumns = [
-    "id",
-    "date",
-    "name",
-    "status",
-    "orderTotal",
-    "paymentMode",
+    'order_id',
+    'date',
+    'name',
+    'status',
+    'orderTotal',
+    'paymentMethod',
   ];
 
-  constructor(private orderService: OrderService){}
+  constructor(private orderService: OrderService) {}
 
   ngOnInit() {
     this.dataSource = new OrdersTableDataSource(this.orderService);
     this.orderService.getOrderCount().subscribe({
-      next: orderCount => {
+      next: (orderCount) => {
         this.dataLength = orderCount;
       },
-      error: err => this.errorMessage = err
+      error: (err) => (this.errorMessage = err),
     });
   }
 

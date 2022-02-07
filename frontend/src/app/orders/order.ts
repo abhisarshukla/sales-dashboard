@@ -1,8 +1,10 @@
 export class Order {
-    id!: number;
-    date!: string;
-    name!: string;
-    status!: string;
-    orderTotal!: number;
-    paymentMode!: string;
+  order_id!: number;
+  date!: string;
+  count!: number;
+  status!: string;
+  orderTotal!: number;
+  paymentMethod!: string;
+  customer_id!: any;
+  product_id!: any;
 }

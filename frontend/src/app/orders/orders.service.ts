@@ -5,33 +5,41 @@ import { catchError, map } from 'rxjs/operators';
 
 import { Order } from './order';
 
+interface OrdersResponse {
+  body: Order[];
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class OrderService {
-  private ordersUrl = 'api/orders/orders.json';
+  private ordersUrl = 'http://127.0.0.1:4000/api/order/all';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getOrders(offset?: number, pageSize?: number, sortField?: string, sortDirection?: string): Observable<Order[]> {
-    return this.http.get<Order[]>(this.ordersUrl).pipe(
+  getOrders(
+    offset?: number,
+    pageSize?: number,
+    sortField?: string,
+    sortDirection?: string
+  ): Observable<Order[]> {
+    return this.http.get<OrdersResponse>(this.ordersUrl).pipe(
       map((response) => {
+        console.log(response);
         return this.getPagedData(
-          this.getSortedData(
-            response,
-            sortField,
-            sortDirection),
-          offset, pageSize);
+          this.getSortedData(response.body, sortField, sortDirection),
+          offset,
+          pageSize
+        );
       }),
       catchError(this.handleError)
     );
   }
 
   getOrderCount(): Observable<number> {
-    return this.http.get<Order[]>(this.ordersUrl).pipe(
+    return this.http.get<OrdersResponse>(this.ordersUrl).pipe(
       map((response) => {
-        return response.length;
+        return response.body.length;
       }),
       catchError(this.handleError)
     );
@@ -53,6 +61,7 @@ export class OrderService {
   }
 
   private getSortedData(data: Order[], active: string, direction: string) {
+    console.log(data);
     if (!active || direction === '') {
       return data;
     }
@@ -60,13 +69,24 @@ export class OrderService {
     return data.sort((a, b) => {
       const isAsc = direction === 'asc';
       switch (active) {
-        case "id": return compare(+a.id, +b.id, isAsc);
-        case "date": return compare(+a.date, +b.date, isAsc);
-        case "name": return compare(+a.name, +b.name, isAsc);
-        case "status": return compare(+a.status, +b.status, isAsc);
-        case "orderTotal": return compare(+a.orderTotal, +b.orderTotal, isAsc);
-        case "paymentMode": return compare(+a.paymentMode, +b.paymentMode, isAsc);
-        default: return 0;
+        case 'order_id':
+          return compare(+a.order_id, +b.order_id, isAsc);
+        case 'date':
+          return compare(+a.date, +b.date, isAsc);
+        case 'name':
+          return compare(
+            +(a.customer_id.name.firstname + a.customer_id.name.lastname),
+            +(b.customer_id.name.firstname + b.customer_id.name.lastname),
+            isAsc
+          );
+        case 'status':
+          return compare(+a.status, +b.status, isAsc);
+        case 'orderTotal':
+          return compare(+a.orderTotal, +b.orderTotal, isAsc);
+        case 'paymentMethod':
+          return compare(+a.paymentMethod, +b.paymentMethod, isAsc);
+        default:
+          return 0;
       }
     });
   }
