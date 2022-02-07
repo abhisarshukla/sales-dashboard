@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
     const token = newToken(user)
     return res
       .status(201)
-      .send({ token, user, expiresIn: config.secrets.jwtExp })
+      .send({ token, user, expiresIn: config.secrets.jwtExpSec })
   } catch (e) {
     return res.status(500).end()
   }
@@ -73,7 +73,7 @@ export const login = async (req, res) => {
     const token = newToken(_user)
     return res
       .status(200)
-      .send({ token, user, expiresIn: config.secrets.jwtExp })
+      .send({ token, user, expiresIn: config.secrets.jwtExpSec })
   } catch (e) {
     console.error(e)
     res.status(500).end()
