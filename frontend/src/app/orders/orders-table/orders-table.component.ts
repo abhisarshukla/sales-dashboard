@@ -61,4 +61,8 @@ export class OrdersTableComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
+
+  onNextStatus(order_id: number) {
+    this.orderService.nextStatus(order_id);
+  }
 }

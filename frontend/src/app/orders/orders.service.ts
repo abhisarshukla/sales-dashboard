@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -14,7 +14,7 @@ interface OrdersResponse {
 })
 export class OrderService {
   private ordersUrl = 'http://127.0.0.1:4000/api/order/all';
-
+  orderChangedEvent: EventEmitter<string> = new EventEmitter();
   constructor(private http: HttpClient) {}
 
   getOrders(
@@ -87,6 +87,12 @@ export class OrderService {
           return 0;
       }
     });
+  }
+
+  nextStatus(order_id: number) {
+    this.http
+      .put(`http://127.0.0.1:4000/api/order/next/${order_id}`, {})
+      .subscribe((resData) => this.orderChangedEvent.emit('changed'));
   }
 }
 
