@@ -131,7 +131,6 @@ export class AuthSignUpComponent implements OnInit, OnDestroy {
     if (!this.signupForm.valid) {
       return;
     }
-    console.log(this.signupForm);
     const email = this.signupForm.value.email;
     const password = this.signupForm.value.password;
     const firstname = this.signupForm.value.firstname;
