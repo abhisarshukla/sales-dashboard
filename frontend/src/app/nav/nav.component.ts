@@ -60,7 +60,7 @@ export class NavComponent implements OnInit, OnDestroy {
       if (user) {
         this.isAuthenticated = true;
         this.user = user;
-        this.avatar = `url('https://avatars.dicebear.com/api/open-peeps/${this.user.token}.svg')`;
+        this.avatar = `url('https://avatars.dicebear.com/api/open-peeps/${this.user.id}.svg')`;
       } else {
         this.isAuthenticated = false;
         this.user = null;
