@@ -24,12 +24,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MiniCardComponent } from './mini-card/mini-card.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SalesComponent } from './sales/sales.component';
 import { ProductSalesChartComponent } from './charts/product-sales-chart/product-sales-chart.component';
 import { SalesTrafficChartComponent } from './charts/sales-traffic-chart/sales-traffic-chart.component';
 import { AnnualSalesChartComponent } from './charts/annual-sales-chart/annual-sales-chart.component';
 import { StoreSessionsChartComponent } from './charts/store-sessions-chart/store-sessions-chart.component';
-import { OrdersTableComponent } from './orders/orders-table/orders-table.component';
 import { AuthSignUpComponent } from './auth-signup/auth-signup.component';
 import { AuthLoginComponent } from './auth-login/auth-login.component';
 import { MatDividerModule } from '@angular/material/divider';
@@ -38,6 +36,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HomeComponent } from './home/home.component';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -46,12 +45,10 @@ import { HomeComponent } from './home/home.component';
     DashComponent,
     CardComponent,
     MiniCardComponent,
-    SalesComponent,
     ProductSalesChartComponent,
     SalesTrafficChartComponent,
     AnnualSalesChartComponent,
     StoreSessionsChartComponent,
-    OrdersTableComponent,
     AuthSignUpComponent,
     AuthLoginComponent,
     HomeComponent,
@@ -82,6 +79,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    OrdersModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

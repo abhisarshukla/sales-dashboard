@@ -8,17 +8,21 @@ import { AuthSignUpComponent } from './auth-signup/auth-signup.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', canActivate: [AuthGuard], component: DashComponent },
   { path: 'sales', canActivate: [AuthGuard], component: SalesComponent },
   { path: 'login', component: AuthLoginComponent },
-  { path: 'signup', component: AuthSignUpComponent }
+  { path: 'signup', component: AuthSignUpComponent },
+  {
+    path: 'demos',
+    loadChildren: () =>
+      import('./sales/sales.module').then((m) => m.SalesModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
