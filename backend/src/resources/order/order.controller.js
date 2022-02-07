@@ -41,3 +41,31 @@ export const getAll = async (req, res) => {
     res.status(400).end()
   }
 }
+
+export const update = async (req, res) => {
+  try {
+    const order = await Order.findOne({ order_id: req.params.id }).lean().exec()
+    let nextState = ''
+    switch (order.status) {
+      case 'pending':
+        nextState = 'shipped'
+        break
+      case 'shipped':
+        nextState = 'delivered'
+        break
+      case 'delivered':
+        nextState = 'pending'
+        break
+    }
+    await Order.findOneAndUpdate(
+      { order_id: req.params.id },
+      { status: nextState }
+    )
+      .lean()
+      .exec()
+    res.status(200).end()
+  } catch (e) {
+    console.error(e)
+    res.status(400).end()
+  }
+}
