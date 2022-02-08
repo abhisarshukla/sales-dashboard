@@ -1,0 +1,7 @@
+.add-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  padding-top: 20px;
+}

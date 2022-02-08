@@ -1,0 +1,85 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title
+      >{{ data.isUpdate ? "Update" : "Create" }} Product</mat-card-title
+    >
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)">
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          placeholder="Product Name"
+          [ngModel]="data.product.name"
+          required
+          #name="ngModel"
+        />
+        <mat-error *ngIf="!name.valid">{{
+          getValidationErrorMessage(name.name)
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          name="quantity"
+          [ngModel]="data.product.quantity"
+          placeholder="100"
+          required
+          #quantity="ngModel"
+        />
+        <mat-error *ngIf="!quantity.valid">{{
+          getValidationErrorMessage(quantity.name)
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Price</mat-label>
+        <input
+          matInput
+          type="number"
+          name="price"
+          [ngModel]="data.product.price"
+          placeholder="5000"
+          required
+          #price="ngModel"
+        />
+        <mat-error *ngIf="!price.valid">{{
+          getValidationErrorMessage(price.name)
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          name="description"
+          cols="80"
+          rows="5"
+          required
+          [ngModel]="data.product.description"
+          #description="ngModel"
+        ></textarea>
+        <mat-error *ngIf="!description.valid">{{
+          getValidationErrorMessage(description.name)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="modal-buttons">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!productForm.valid"
+        >
+          Submit
+        </button>
+        <button (click)="onCloseModal()" mat-flat-button type="button">
+          Close
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
