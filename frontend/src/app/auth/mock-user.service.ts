@@ -82,7 +82,6 @@ export class MockUserService {
         const { password, ...userResponse } = user;
         observer.next(userResponse);
       } else {
-        console.log(user);
         observer.error(error);
       }
       observer.complete();
@@ -111,15 +110,15 @@ export class MockUserService {
       };
       this.users.push(newUser);
     }
-    return new Observable(observer => {
-      if(error.length == 0) {
-        const { password, ...userResponse} = newUser;
+    return new Observable((observer) => {
+      if (error.length == 0) {
+        const { password, ...userResponse } = newUser;
         observer.next(userResponse);
       } else {
         observer.error(error);
       }
       observer.complete();
-    })
+    });
   }
 
   private newUser(
