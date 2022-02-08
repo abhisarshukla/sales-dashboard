@@ -7,7 +7,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-import { AppRoutingModule } from '../app-routing.module';
 import { OrderService } from './orders.service';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { OrderService } from './orders.service';
     MatSortModule,
     MatChipsModule,
     MatButtonModule,
-    AppRoutingModule,
   ],
   exports: [OrdersTableComponent],
   providers: [OrderService],
