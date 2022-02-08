@@ -8,6 +8,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from '../app-routing.module';
+import { OrderService } from './orders.service';
 
 @NgModule({
   declarations: [OrdersTableComponent],
@@ -21,5 +22,6 @@ import { AppRoutingModule } from '../app-routing.module';
     AppRoutingModule,
   ],
   exports: [OrdersTableComponent],
+  providers: [OrderService],
 })
 export class OrdersModule {}

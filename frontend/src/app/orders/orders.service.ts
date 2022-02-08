@@ -9,9 +9,7 @@ interface OrdersResponse {
   body: Order[];
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class OrderService {
   private ordersUrl = 'http://127.0.0.1:4000/api/order/all';
   orderChangedEvent: EventEmitter<string> = new EventEmitter();
