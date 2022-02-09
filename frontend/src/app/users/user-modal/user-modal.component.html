@@ -1,0 +1,95 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Update User</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <div ngModelGroup="name" #name>
+        <mat-form-field appearance="standard">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="firstname"
+            placeholder="John"
+            [ngModel]="data.user.name.firstname"
+            required
+            #firstname="ngModel"
+          />
+          <mat-error *ngIf="!firstname.valid">
+            First Name is required!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="lastname"
+            placeholder="John"
+            [ngModel]="data.user.name.lastname"
+            required
+            #lastname="ngModel"
+          />
+          <mat-error *ngIf="!lastname.valid">
+            Last Name is required!
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          placeholder="user@email.com"
+          [ngModel]="data.user.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <mat-error *ngIf="!email.valid">{{ getEmailErrorMessage() }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          name="password"
+          ngModel
+          minlength="8"
+          placeholder="change password"
+          #password="ngModel"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="!password.valid">{{
+          getPasswordErrorMessage()
+        }}</mat-error>
+        <mat-hint align="end">Minimum 8 characters</mat-hint>
+      </mat-form-field>
+      <div class="modal-buttons">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!userForm.valid"
+        >
+          Submit
+        </button>
+        <button (click)="onCloseModal()" mat-flat-button type="button">
+          Close
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

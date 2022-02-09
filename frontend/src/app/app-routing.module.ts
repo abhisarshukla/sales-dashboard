@@ -21,13 +21,21 @@ const routes: Routes = [
   },
   {
     path: 'products',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./products/products.module').then((m) => m.ProductsModule),
   },
   {
     path: 'customers',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./customers/customers.module').then((m) => m.CustomersModule),
+  },
+  {
+    path: 'admin/users',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
   },
 ];
 
