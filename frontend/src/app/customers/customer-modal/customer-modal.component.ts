@@ -1,4 +1,3 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -20,19 +19,11 @@ export class ModalData {
 })
 export class CustomerModalComponent {
   @ViewChild('customerForm') customerForm: NgForm;
-  private titleCasePipe = new TitleCasePipe();
   constructor(
     public dialogRef: MatDialogRef<CustomerModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ModalData
   ) {}
 
-  getValidationErrorMessage(controlName: string) {
-    if (this.customerForm.form.controls[controlName].hasError('required')) {
-      return this.titleCasePipe.transform(controlName) + ' is required!';
-    } else {
-      return '';
-    }
-  }
   onSubmit(form: NgForm) {
     console.log(form.form.value);
     this.dialogRef.close(form.form.value);
