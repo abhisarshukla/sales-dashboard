@@ -6,7 +6,7 @@ const router = new Router()
 
 router.get('/', grantAccess('readOwn', 'profile'), me)
 router.put('/', grantAccess('updateOwn', 'profile'), updateMe)
-router.put('/:id', grantAccess('updateAny', 'user'), updateUser)
 router.get('/all', grantAccess('readAny', 'user'), getUsers)
+router.put('/:id', grantAccess('updateAny', 'user'), updateUser)
 
 export default router
