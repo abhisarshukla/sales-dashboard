@@ -18,6 +18,7 @@ Make sure you installed nodejs-v16 or above and mongodb-v5 or above.
 4. Admin module.
 5. CRUD operations.
 6. Pagination on frontend and backend.
+7. Lazy Loading modules
 
 ## Technologies
 1. Angular
