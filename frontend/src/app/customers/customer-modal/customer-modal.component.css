@@ -1,0 +1,11 @@
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.modal-buttons {
+  padding-top: 1rem;
+  display: flex;
+  gap: 10px;
+}

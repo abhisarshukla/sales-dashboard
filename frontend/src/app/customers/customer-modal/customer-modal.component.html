@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title
+      >{{ data.isUpdate ? "Update" : "Create" }} Product</mat-card-title
+    >
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)">
+      <div ngModelGroup="name" #name>
+        <mat-form-field appearance="standard">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="firstname"
+            placeholder="John"
+            [ngModel]="data.customer.name.firstname"
+            required
+            #firstname="ngModel"
+          />
+          <mat-error *ngIf="!firstname.valid">
+            First Name is required!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="lastname"
+            placeholder="John"
+            [ngModel]="data.customer.name.lastname"
+            required
+            #lastname="ngModel"
+          />
+          <mat-error *ngIf="!lastname.valid">Last Name is required!</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <textarea
+          matInput
+          name="address"
+          cols="80"
+          rows="5"
+          required
+          [ngModel]="data.customer.address"
+          #address="ngModel"
+        ></textarea>
+        <mat-error *ngIf="!address.valid">Address is required!</mat-error>
+      </mat-form-field>
+      <div class="modal-buttons">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="!customerForm.valid"
+        >
+          Submit
+        </button>
+        <button (click)="onCloseModal()" mat-flat-button type="button">
+          Close
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
