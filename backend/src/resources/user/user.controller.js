@@ -26,9 +26,12 @@ export const updateMe = async (req, res) => {
   }
 }
 
-export const getUsers = async (_req, res) => {
+export const getUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-password').lean().exec()
+    const users = await User.find({ user_id: { $ne: req.user.user_id } })
+      .select('-password')
+      .lean()
+      .exec()
     res.status(200).json({ data: users })
   } catch (e) {
     console.error(e)
@@ -54,6 +57,19 @@ export const updateUser = async (req, res) => {
       .lean()
       .exec()
 
+    res.status(200).json({ data: user })
+  } catch (e) {
+    console.error(e)
+    res.status(400).end()
+  }
+}
+
+export const remove = async (req, res) => {
+  try {
+    const user = await User.findOneAndRemove(
+      { user_id: req.params.id },
+      req.body
+    ).exec()
     res.status(200).json({ data: user })
   } catch (e) {
     console.error(e)
