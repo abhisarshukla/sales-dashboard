@@ -24,7 +24,13 @@ export class CustomersTableComponent implements AfterViewInit, OnInit {
   dataLength: number;
   errorMessage: string;
 
-  displayedColumns = ['customer_id', 'name', 'address', 'actions'];
+  displayedColumns = [
+    'customer_id',
+    'firstname',
+    'lastname',
+    'address',
+    'actions',
+  ];
 
   constructor(
     private customerService: CustomersService,
