@@ -49,3 +49,16 @@ export const getAll = async (req, res) => {
     res.status(400).end()
   }
 }
+
+export const remove = async (req, res) => {
+  try {
+    const customer = await Customer.findOneAndRemove(
+      { customer_id: req.params.id },
+      req.body
+    ).exec()
+    res.status(200).json({ data: customer })
+  } catch (e) {
+    console.error(e)
+    res.status(400).end()
+  }
+}
