@@ -102,7 +102,7 @@ export const toggleRole = async (req, res) => {
         nextRole = 'admin'
         break
     }
-    await Order.findOneAndUpdate({ user_id: req.params.id }, { role: nextRole })
+    await User.findOneAndUpdate({ user_id: req.params.id }, { role: nextRole })
       .lean()
       .exec()
     res.status(200).end()
